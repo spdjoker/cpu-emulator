@@ -9,8 +9,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 
 add_subdirectory(external/fmt)
 
+include_directories(src)
+
 set(SOURCE_FILES
   src/main.cpp
+
+  src/jkr/cmd_options.hpp
+  src/jkr/generic.hpp
   )
 
 add_executable(${BUILD_NAME} ${SOURCE_FILES})
