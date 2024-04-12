@@ -1,7 +1,6 @@
-#ifndef JKR_CMD_OPTIONS_HPP
-#define JKR_CMD_OPTIONS_HPP
+#pragma once
 
-#include "fmt/base.h"
+#include <fmt/base.h>
 
 struct CMD_Options {
   enum FLAGS {
@@ -88,5 +87,3 @@ struct CMD_Options {
     success = flags & FLAG_MODES;
   }
 };
-
-#endif
