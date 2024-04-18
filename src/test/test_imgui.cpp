@@ -6,23 +6,13 @@
 #include "jkr/core/window.hpp"
 #include "jkr/editor/ui.hpp"
 
-void key_callback(GLFWwindow* window, int key, int, int action, int) {
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
 int main() {
   jkr::WindowProps props;
   props.enable(jkr::WindowProps::OPT_MAXIMIZED);
-  // props.enable(jkr::WindowProps::OPT_TRANSPARENT_FRAMEBUFFER);
-  // props.disable(jkr::WindowProps::OPT_RESIZABLE);
-  // props.disable(jkr::WindowProps::OPT_DECORATED);
 
   jkr::Window window = jkr::Window::Create(props);
   if (!window.is_valid())
     return 1;
-
-  glfwSetKeyCallback(window.glfw_window(), key_callback);
 
   // Initializing ImGui
   window.make_context_current();
@@ -38,12 +28,16 @@ int main() {
     if (!jkr::editor::ui::capturing_mouse()) {
       // Ignore mouse over ImGui elements
     }
-    
-    // Render the Editor UI
-    jkr::editor::ui::render();
+
+    if (window.input().on_key_down(jkr::key::ESCAPE)) {
+      window.close();
+    }
 
     // Regular Updates
     // Render Objects
+    
+    // Render the Editor UI
+    jkr::editor::ui::render();
 
     // Display GLFW framebuffer and poll events
     window.swap_buffers();

@@ -25,19 +25,32 @@ add_subdirectory(external/glm)
 include_directories(src)
 
 set(TEST_NAMES
-  test_glfw
-  test_imgui
+  # test_glfw
+  # test_imgui
+  test_triangle
   )
 
 set(JKR_FILES
   # src/jkr/cmd_options.h
   # src/jkr/generic.hpp
 
+  src/jkr/core/input.cpp
+  src/jkr/core/input.hpp
   src/jkr/core/window.cpp
   src/jkr/core/window.hpp
 
   src/jkr/editor/ui.cpp
   src/jkr/editor/ui.hpp
+  src/jkr/editor/view.cpp
+  src/jkr/editor/view.hpp
+
+  src/jkr/editor/view/inspector.cpp
+  src/jkr/editor/view/inspector.hpp
+
+  src/jkr/graphics/primitives.cpp
+  src/jkr/graphics/primitives.hpp
+  src/jkr/graphics/shader.cpp
+  src/jkr/graphics/shader.hpp
   )
 
 set(IMGUI_FILES

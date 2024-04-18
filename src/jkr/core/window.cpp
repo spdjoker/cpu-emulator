@@ -1,15 +1,22 @@
-#include "jkr/core/window.hpp"
+#include "./window.hpp"
+#include "fmt/base.h"
+#include "jkr/core/input.hpp"
 
 #include <fmt/core.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <string>
-#include <glm/vec2.hpp>
-#include <glm/vec4.hpp>
 
 namespace jkr {
 
 unsigned int glfw_window_count = 0;
+
+void glfw_key_callback(GLFWwindow* window, int key, int, int action, int) {
+  Input* input = (Input*)glfwGetWindowUserPointer(window);
+  if (action == GLFW_PRESS)
+    input->set_key_down(key);
+  else if (action == GLFW_RELEASE)
+    input->set_key_up(key);
+}
 
 void WindowProps::enable(Option o) {
   flags |= (int)o;
@@ -23,9 +30,26 @@ bool WindowProps::has(Option o) const {
   return (flags & ((int)o)) == (int)o;
 }
 
-Window::Window(const WindowProps& props, GLFWwindow* window) {
+Window::Window(const WindowProps& props, GLFWwindow* glfw_window) noexcept {
+  p_glfw_window = glfw_window;
   m_props = props;
-  p_glfw_window = window;
+  m_input = Input();
+  if (p_glfw_window)
+    glfwSetWindowUserPointer(p_glfw_window, &m_input);
+}
+
+Window::Window(Window& win) noexcept {
+  p_glfw_window = win.p_glfw_window;
+  m_props = win.m_props;
+  win.p_glfw_window = nullptr;
+}
+Window& Window::operator=(Window& win) noexcept {
+  if (this != &win) {
+    p_glfw_window = win.p_glfw_window;
+    m_props = win.m_props;
+    win.p_glfw_window = nullptr;
+  }
+  return *this;
 }
 
 Window::~Window() {
@@ -63,14 +87,10 @@ Window Window::Create(const WindowProps& props) {
     return Window(props);
   }
 
+  glfwSetKeyCallback(glfw_window, glfw_key_callback);
+
   glfw_window_count++;
-
   return Window(props, glfw_window);
-}
-
-Window::Window(const Window& win) {
-  p_glfw_window = win.p_glfw_window;
-  m_props = win.m_props;
 }
 
 void Window::destroy() {
@@ -97,6 +117,7 @@ void Window::swap_buffers() {
 }
 
 void Window::poll_events() {
+  m_input.poll_events();
   glfwPollEvents();
 }
 
@@ -129,9 +150,5 @@ const glm::vec4& Window::get_clear_color() const {
 void Window::set_clear_color(const glm::vec4& color) {
   m_props.clear_color = color;
 } 
-
-GLFWwindow* Window::glfw_window() {
-  return p_glfw_window;
-}
 
 }

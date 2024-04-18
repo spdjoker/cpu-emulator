@@ -1,4 +1,4 @@
-#include "ui.hpp"
+#include "jkr/editor/ui.hpp"
 
 #include "imgui/imgui.h"
 #include "imgui/backends/imgui_impl_glfw.h"
@@ -94,7 +94,7 @@ void field_input_float(const std::string& text, float values[n]) {
 
 float pos[3] = {0.0f};
 float rot[3] = {0.0f};
-float sca[3] = {0.0f};
+float sca[3] = {1.0f, 1.0f, 1.0f};
 float piv[3] = {0.0f};
 
 void render_inspector() {
@@ -129,7 +129,7 @@ void render_dock_space() {
     | ImGuiWindowFlags_NoBackground;
 
   constexpr ImGuiDockNodeFlags dockspace_flags 
-    = ImGuiDockNodeFlags_None;
+    = ImGuiDockNodeFlags_PassthruCentralNode;
 
   ImGuiViewport* viewport = ImGui::GetMainViewport();
   ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -164,7 +164,7 @@ void render_dock_space() {
   }
   ImGui::EndMenuBar();
 
-  ImGui::DockSpaceOverViewport(viewport, ImGuiDockNodeFlags_PassthruCentralNode);
+  ImGui::DockSpaceOverViewport(viewport, dockspace_flags);
   ImGui::End();
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./input.hpp"
 #include <string>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
@@ -43,11 +44,13 @@ private:
 class Window {
   GLFWwindow* p_glfw_window;
   WindowProps m_props;
+  Input m_input;
 
-  Window(const WindowProps& props, GLFWwindow* window = nullptr);
+  Window(const WindowProps& props, GLFWwindow* glfw_window = nullptr) noexcept;
+  Window(Window& win) noexcept;
+  Window& operator=(Window& other) noexcept;
 
 public:
-  Window(const Window& win);
   ~Window();
 
   static Window Create(const WindowProps& props = WindowProps());
@@ -67,7 +70,8 @@ public:
   void set_clear_color(const glm::vec4& color);
 
   // replace when making ImGUI wrapper
-  GLFWwindow* glfw_window();
+  inline GLFWwindow* glfw_window() const { return p_glfw_window; }
+  inline const Input& input() const { return m_input; }
 };
 
 }

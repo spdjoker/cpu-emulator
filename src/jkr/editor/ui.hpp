@@ -1,5 +1,4 @@
-#ifndef JKR_EDITOR_UI_HPP
-#define JKR_EDITOR_UI_HPP
+#pragma once
 
 #include "jkr/core/window.hpp"
 
@@ -23,5 +22,3 @@ bool capturing_mouse();
 bool capturing_keyboard();
 
 }
-
-#endif
