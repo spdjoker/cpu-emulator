@@ -48,7 +48,6 @@ namespace jkr::graphics {
 
   Shader::Shader(const char *vert_file, const char *frag_file) {
     // Read the files and store their contents
-    fmt::println("FILE CONTENTS...");
     std::string vert_code = get_file_contents(vert_file);
     std::string frag_code = get_file_contents(frag_file);
 
@@ -56,25 +55,21 @@ namespace jkr::graphics {
     const char *vert_source = vert_code.c_str();
     const char *frag_source = frag_code.c_str();
 
-    fmt::println("VERTEX...");
+    fmt::println("Generating vertex shader '{}'...", vert_file);
     // Create the vertex shader and store the reference
-    fmt::println("0...");
     GLuint vert_shader = glCreateShader(GL_VERTEX_SHADER);
-    fmt::println("1...");
     glShaderSource(vert_shader, 1, &vert_source, NULL);
-    fmt::println("2...");
     glCompileShader(vert_shader);
-    fmt::println("3...");
     compile_errors(vert_shader, "VERTEX");
 
-    fmt::println("FRAGMENT...");
+    fmt::println("Generating fragment shader '{}'...", frag_file);
     // Create the fragment shader and store the reference
     GLuint frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(frag_shader, 1, &frag_source, NULL);
     glCompileShader(frag_shader);
     compile_errors(frag_shader, "FRAGMENT");
 
-    fmt::println("PROGRAM...");
+    fmt::println("Assembling shader program...");
     // Create the shader program and attach the shaders
     shader_id = glCreateProgram();
     glAttachShader(shader_id, vert_shader);

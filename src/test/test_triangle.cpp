@@ -70,23 +70,29 @@ int main() {
     jkrg::vao::draw_triangles(vao, indices.size());
     
     // Render the Editor UI
-    // jkr::editor::ui::render();
+    jkr::editor::ui::render();
 
     // Display GLFW framebuffer and poll events
     window.swap_buffers();
     window.poll_events();
 
-    // if (jkr::editor::ui::check_action(jkr::editor::ui::ActionFlags_CloseWindow)) {
-    //   window.close();
-    // }
+    if (jkr::editor::ui::check_action(jkr::editor::ui::ActionFlags_CloseWindow)) {
+      window.close();
+    }
   }
 
+  fmt::println("Cleaning IBO...");
   jkrg::ibo::destroy(ibo);
+  fmt::println("Cleaning VBO...");
   jkrg::vbo::destroy(vbo);
+  fmt::println("Cleaning VAO...");
   jkrg::vao::destroy(vao);
-  // jkr::editor::ui::destroy();
+  fmt::println("Cleaning UI...");
+  jkr::editor::ui::destroy();
 
+  fmt::println("Cleaning window...");
   window.destroy();
+  fmt::println("Closed...");
 
   return 0;
 } 

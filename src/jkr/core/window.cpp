@@ -62,8 +62,13 @@ Window Window::Create(const WindowProps& props) {
       fmt::println(stderr, "Failed to initialize GLFW");
       return Window(props);
     }
-    glfwWindowHint(GLFW_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+#ifdef __APPLE__
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+#endif
   }
 
   glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, props.has(WindowProps::OPT_TRANSPARENT_FRAMEBUFFER));

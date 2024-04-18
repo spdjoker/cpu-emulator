@@ -10,6 +10,7 @@ namespace jkr::graphics {
 
     void destroy(vao_t& out_vao) {
       glDeleteVertexArrays(1, &out_vao);
+      out_vao = 0;
     }
 
     void bind(vao_t vao) {
@@ -40,7 +41,8 @@ namespace jkr::graphics {
     }
 
     void destroy(vbo_t& out_vbo) {
-      glDeleteBuffers(GL_ARRAY_BUFFER, &out_vbo);
+      glDeleteBuffers(1, &out_vbo);
+      out_vbo = 0;
     }
 
     void bind(vbo_t vbo) {
@@ -61,7 +63,8 @@ namespace jkr::graphics {
     }
 
     void destroy(ibo_t& out_ibo) {
-      glDeleteBuffers(GL_ELEMENT_ARRAY_BUFFER, &out_ibo);
+      glDeleteBuffers(1, &out_ibo);
+      out_ibo = 0;
     }
 
     void bind(ibo_t ibo) {
