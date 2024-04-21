@@ -33,11 +33,11 @@ namespace jkr::graphics {
   }
 
   namespace vbo {
-    void create(vbo_t& out_vbo, const std::vector<float>& data) {
+    void create(vbo_t& out_vbo, const void* data, unsigned int bytes) {
       glGenBuffers(1, &out_vbo);
       if (!out_vbo) return;
       glBindBuffer(GL_ARRAY_BUFFER, out_vbo);
-      glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), data.data(), GL_STATIC_DRAW);
+      glBufferData(GL_ARRAY_BUFFER, bytes, data, GL_STATIC_DRAW);
     }
 
     void destroy(vbo_t& out_vbo) {
@@ -81,6 +81,7 @@ namespace jkr::graphics {
     const uint_t FLOAT = GL_FLOAT;
     const uint_t INT = GL_INT;
     const uint_t UNSIGNED_INT = GL_UNSIGNED_INT;
+    const uint_t ARRAY_BUFFER = GL_ARRAY_BUFFER;
   }
 
 }

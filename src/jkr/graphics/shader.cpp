@@ -1,5 +1,6 @@
 #include "./shader.hpp"
 #include "fmt/base.h"
+#include "glm/gtc/type_ptr.hpp"
 #include <GL/glew.h>
 #include <cstring>
 #include <fstream>
@@ -88,4 +89,11 @@ namespace jkr::graphics {
 
   void Shader::activate() { glUseProgram(shader_id); }
 
+  uniform_t Shader::get_uniform(const char* uniform_name) {
+    return glGetUniformLocation(shader_id, uniform_name);
+  }  
+
+  void Shader::set_uniform_mat4(uniform_t loc, const glm::mat4& mat, bool transpose) {
+    glUniformMatrix4fv(loc, 1, transpose, glm::value_ptr(mat));
+  }
 }

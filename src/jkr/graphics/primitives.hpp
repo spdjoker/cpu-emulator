@@ -28,7 +28,12 @@ namespace jkr::graphics {
   // Vertex Buffer Object
   namespace vbo {
     // TODO: allow updating data using glBufferSubData() and glMapBuffer()
-    void create(vbo_t& out_vbo, const std::vector<float>& data);
+    void create(vbo_t& out_vbo, const void* data, unsigned int bytes);
+    template <typename T>
+    void create(vbo_t& out_vbo, const std::vector<T>& data) {
+      create(out_vbo, data.data(), data.size() * sizeof(T));
+    }
+    // void create(vbo_t& out_vbo, const std::vector<float>& data);
     void destroy(vbo_t& out_vbo);
     void bind(vbo_t vbo);
     void unbind();
@@ -48,5 +53,6 @@ namespace jkr::graphics {
     extern const dtype_t FLOAT;
     extern const dtype_t INT;
     extern const dtype_t UNSIGNED_INT;
+    extern const dtype_t ARRAY_BUFFER;
   }
 }

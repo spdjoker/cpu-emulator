@@ -53,7 +53,7 @@ class Window {
 public:
   ~Window();
 
-  static Window Create(const WindowProps& props = WindowProps());
+  static Window create(const WindowProps& props = WindowProps());
   void destroy();
   
   void close();
@@ -72,6 +72,8 @@ public:
   // replace when making ImGUI wrapper
   inline GLFWwindow* glfw_window() const { return p_glfw_window; }
   inline const Input& input() const { return m_input; }
+
+  static bool enable_opengl_features();
 };
 
 }

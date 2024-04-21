@@ -56,7 +56,7 @@ Window::~Window() {
   destroy();
 }
 
-Window Window::Create(const WindowProps& props) {
+Window Window::create(const WindowProps& props) {
   if (!glfw_window_count) {
     if (!glfwInit()) {
       fmt::println(stderr, "Failed to initialize GLFW");
@@ -155,5 +155,9 @@ const glm::vec4& Window::get_clear_color() const {
 void Window::set_clear_color(const glm::vec4& color) {
   m_props.clear_color = color;
 } 
+
+bool Window::enable_opengl_features() {
+  return glewInit() == GLEW_OK;
+}
 
 }

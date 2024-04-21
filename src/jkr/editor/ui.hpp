@@ -1,6 +1,7 @@
 #pragma once
 
 #include "jkr/core/window.hpp"
+#include "jkr/component/transform.hpp"
 
 namespace jkr::editor::ui {
   
@@ -13,7 +14,7 @@ enum ActionFlags_ {
 bool create(Window& window);
 void destroy();
 
-void render();
+void render(component::Transform& transform);
 void render_dock_space();
 void render_inspector();
 

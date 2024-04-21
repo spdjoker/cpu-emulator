@@ -1,8 +1,9 @@
-#include "jkr/editor/ui.hpp"
+#include "./ui.hpp"
 
 #include "imgui/imgui.h"
 #include "imgui/backends/imgui_impl_glfw.h"
 #include "imgui/backends/imgui_impl_opengl3.h"
+#include "jkr/component/transform.hpp"
 #include <string>
 
 namespace jkr::editor::ui {
@@ -50,14 +51,18 @@ void destroy() {
   editor_window = nullptr;
 }
 
-void render() {
+void render(component::Transform& transform) {
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
   // Render UI Elements
   render_dock_space();
-  render_inspector();
+
+  if (ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse)) {
+    transform.render_inspector_view();
+    ImGui::End();
+  }
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -96,25 +101,6 @@ float pos[3] = {0.0f};
 float rot[3] = {0.0f};
 float sca[3] = {1.0f, 1.0f, 1.0f};
 float piv[3] = {0.0f};
-
-void render_inspector() {
-  ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse);
-  if (ImGui::CollapsingHeader("Transform")) {
-    if (ImGui::BeginTable("inspector-table-1", 2)) {
-      ImGui::TableSetupColumn("column-field", ImGuiTableColumnFlags_WidthFixed);
-      ImGui::TableSetupColumn("column-value", ImGuiTableColumnFlags_WidthStretch);
-
-      field_input_float<3>("position", pos);
-      field_input_float<3>("rotation", rot);
-      field_input_float<3>("scale", sca);
-      field_input_float<3>("pivot", piv);
-
-      ImGui::EndTable();
-    }
-  }
-  // try to load and render the file here
-  ImGui::End();
-}
 
 void render_dock_space() {
   constexpr ImGuiWindowFlags win_flags
