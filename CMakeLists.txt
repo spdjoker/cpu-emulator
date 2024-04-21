@@ -36,8 +36,6 @@ set(JKR_FILES
   src/jkr/component/transform.cpp
   src/jkr/component/transform.hpp
 
-  src/jkr/core/camera.cpp
-  src/jkr/core/camera.hpp
   src/jkr/core/input.cpp
   src/jkr/core/input.hpp
   src/jkr/core/window.cpp
@@ -57,7 +55,6 @@ set(JKR_FILES
   src/jkr/graphics/shader.hpp
 
   src/jkr/utils/flags.hpp
-  src/jkr/utils/tracker.hpp
   )
 
 set(IMGUI_FILES

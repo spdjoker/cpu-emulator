@@ -24,7 +24,6 @@ struct vertex_t {
 
 int main() {
   jkr::WindowProps props;
-  props.enable(jkr::WindowProps::OPT_MAXIMIZED);
 
   jkr::Window window = jkr::Window::create(props);
   if (!window.is_valid())
@@ -45,9 +44,9 @@ int main() {
   jkrg::uniform_t u_mat4_model = shader.get_uniform("mat4_model");
 
   std::vector<vertex_t> vertices = {
-    {{-0.5f,-0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-    {{ 0.0f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-    {{ 0.5f,-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}}
+    {{0.0f,0.0f,0.0f}, {1.0f,0.0f,0.0f}},
+    {{0.0f,1.0f,0.0f}, {0.0f,1.0f,0.0f}},
+    {{1.0f,0.0f,0.0f}, {0.0f,0.0f,1.0f}}
   };
   std::vector<unsigned int> indices = {0, 1, 2};
 

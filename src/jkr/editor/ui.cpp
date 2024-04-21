@@ -10,6 +10,8 @@ namespace jkr::editor::ui {
 
 ActionFlags action_flags;
 GLFWwindow* editor_window = nullptr;
+
+bool show_inspector = true;
  
 bool create(Window& window) {
   if (editor_window)
@@ -59,9 +61,11 @@ void render(component::Transform& transform) {
   // Render UI Elements
   render_dock_space();
 
-  if (ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse)) {
-    transform.render_inspector_view();
-    ImGui::End();
+  if (show_inspector) {
+    if (ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse)) {
+      transform.render_inspector_view();
+      ImGui::End();
+    }
   }
 
   ImGui::Render();
@@ -140,6 +144,10 @@ void render_dock_space() {
     if (ImGui::MenuItem("Close Program", "Esc")) {
       action_flags |= ActionFlags_CloseWindow;
     }
+    ImGui::EndMenu();
+  }
+  if (ImGui::BeginMenu("Tools")) {
+    ImGui::MenuItem("Inspector", NULL, &show_inspector);
     ImGui::EndMenu();
   }
   if (ImGui::BeginMenu("Help")) { 
